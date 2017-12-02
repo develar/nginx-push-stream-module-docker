@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
@@ -124,6 +124,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log \
 	&& rm -rf /tmp/nginx-push-stream-module
 
+COPY start.sh /start.sh
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
@@ -131,4 +132,4 @@ EXPOSE 80
 
 STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh", "-g", "daemon off;"]
